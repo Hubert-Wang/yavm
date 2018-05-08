@@ -27,15 +27,15 @@ CONSTANT_InterfaceMethodref_info {
  }
 
 type ConstantFieldRefInfo struct {
-	ConstantFieldRefInfo
+	ConstantMemberRefInfo
 }
 
 type ConstantMethodRefInfo struct {
-	ConstantFieldRefInfo
+	ConstantMemberRefInfo
 }
 
-type ConstantInterfaceRefInfo struct {
-	ConstantFieldRefInfo
+type ConstantInterfaceMethodRefInfo struct {
+	ConstantMemberRefInfo
 }
 
 func (self *ConstantMemberRefInfo) readInfo(reader *ClassReader)  {
@@ -44,5 +44,9 @@ func (self *ConstantMemberRefInfo) readInfo(reader *ClassReader)  {
 }
 
 func (self *ConstantMemberRefInfo) ClassName() string  {
-	return ""
+	return self.cp.getUtf8(self.classIndex)
+}
+
+func (self *ConstantMemberRefInfo) NameAndDescription() (string, string)  {
+	return self.cp.getNameAndType(self.nameAndTypeIndex)
 }
